@@ -7,11 +7,15 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY requirements.txt .
-
-RUN pip3 install --no-cache-dir -r requirements.txt
-
+# COPY ALL source code first
+# This includes pyproject.toml, README.md, server.py,
+# and (most importantly) the 'marker_api' directory.
 COPY . .
+
+# NOW, run the install.
+# pip will find pyproject.toml and the 'marker_api' directory
+# and the install will succeed.
+RUN pip3 install -e .
 
 ENV ENV=production
 
