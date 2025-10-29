@@ -136,6 +136,7 @@ from marker_api.model.schema import (
     ServerType,
 )
 from marker_api.demo import demo_ui
+import torch
 
 # Initialize logging
 configure_logging()
@@ -151,7 +152,7 @@ async def lifespan(app: FastAPI):
     global model_list
     logger.debug("--------------------- Loading OCR Model -----------------------")
     print_markerapi_text_art()
-    model_list = load_all_models()
+    model_list = load_all_models(device="cuda",dtype=torch.float16)
     yield
 
 
